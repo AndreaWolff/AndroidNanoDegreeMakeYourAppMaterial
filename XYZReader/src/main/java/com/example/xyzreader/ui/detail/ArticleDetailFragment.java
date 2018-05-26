@@ -1,8 +1,7 @@
-package com.example.xyzreader.ui;
+package com.example.xyzreader.ui.detail;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,7 +18,6 @@ import java.util.GregorianCalendar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -35,6 +33,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.example.xyzreader.ui.list.ArticleListActivity;
+import com.example.xyzreader.ui.util.DrawInsetsFrameLayout;
+import com.example.xyzreader.ui.util.ImageLoaderHelper;
+import com.example.xyzreader.ui.util.ObservableScrollView;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is

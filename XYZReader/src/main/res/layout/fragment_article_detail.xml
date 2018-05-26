@@ -1,11 +1,11 @@
-<com.example.xyzreader.ui.DrawInsetsFrameLayout
+<com.example.xyzreader.ui.util.DrawInsetsFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/draw_insets_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.xyzreader.ui.ObservableScrollView
+    <com.example.xyzreader.ui.util.ObservableScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +34,7 @@
 
             </FrameLayout>
 
-            <com.example.xyzreader.ui.MaxWidthLinearLayout
+            <com.example.xyzreader.ui.util.MaxWidthLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -79,18 +79,18 @@
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
                     />
 
-            </com.example.xyzreader.ui.MaxWidthLinearLayout>
+            </com.example.xyzreader.ui.util.MaxWidthLinearLayout>
         </FrameLayout>
-    </com.example.xyzreader.ui.ObservableScrollView>
+    </com.example.xyzreader.ui.util.ObservableScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/share_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_share"
-        />
+        android:layout_margin="@dimen/fab_margin"/>
+        <!--app:srcCompat="@drawable/ic_share"-->
+        <!--/>-->
 
     <!--<ImageButton-->
     <!--android:id="@+id/share_fab"-->
@@ -106,4 +106,4 @@
     <!--android:stateListAnimator="@anim/fab_state_list_anim"-->
     <!--/>-->
 
-</com.example.xyzreader.ui.DrawInsetsFrameLayout>
+</com.example.xyzreader.ui.util.DrawInsetsFrameLayout>
