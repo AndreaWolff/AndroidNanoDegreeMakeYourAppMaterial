@@ -13,6 +13,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -52,8 +53,6 @@ import static java.lang.System.currentTimeMillis;
  * handset and tablet-size devices. On handsets, the activity presents a list of items, which when
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
- *
- * TODO: MAKE TABLET HAVE A GRID
  */
 public class ArticleListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -79,7 +78,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         setContentView(R.layout.activity_article_list);
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout);
-        collapsingToolbarLayout.setTitle(this.getString(R.string.app_name));
+        collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -141,8 +140,13 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         Adapter adapter = new Adapter(cursor);
         adapter.setHasStableIds(true);
         articleRecyclerView.setAdapter(adapter);
-        articleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        articleRecyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
+
+        if (getResources().getBoolean(R.bool.isTablet)) {
+            articleRecyclerView.setLayoutManager(new GridLayoutManager(this, getResources().getInteger(R.integer.grid_columns)));
+        } else {
+            articleRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            articleRecyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
+        }
     }
 
     @Override
@@ -197,9 +201,8 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
             Date publishedDate = parsePublishedDate();
 
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-                holder.subtitleView.setText(
-                        fromHtml(DateUtils.getRelativeTimeSpanString(publishedDate.getTime(), currentTimeMillis(),
-                                        HOUR_IN_MILLIS, FORMAT_ABBREV_ALL).toString() + "<br/>" + " by " + mCursor.getString(AUTHOR)));
+                holder.subtitleView.setText(fromHtml(DateUtils.getRelativeTimeSpanString(publishedDate.getTime(), currentTimeMillis(),
+                                            HOUR_IN_MILLIS, FORMAT_ABBREV_ALL).toString() + "<br/>" + " by " + mCursor.getString(AUTHOR)));
             } else {
                 holder.subtitleView.setText(fromHtml(outputFormat.format(publishedDate) + "<br/>" + " by " + mCursor.getString(AUTHOR)));
             }
