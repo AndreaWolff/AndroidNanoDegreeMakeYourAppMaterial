@@ -14,10 +14,6 @@
     <dimen name="padding_standard_half">8dp</dimen>
     <dimen name="padding_standard">16dp</dimen>
     <dimen name="padding_standard_1.5">24dp</dimen>
-    
-    
-    <dimen name="fab_elevation">2dp</dimen>
-    <dimen name="fab_press_translation_z">6dp</dimen>
-    <dimen name="fab_margin">24dp</dimen>
 
+    <dimen name="fab_margin">24dp</dimen>
 </resources>

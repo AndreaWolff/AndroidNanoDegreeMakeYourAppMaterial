@@ -64,14 +64,14 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
     private RecyclerView articleRecyclerView;
 
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
 
     // Use default locale format
     @SuppressLint("SimpleDateFormat")
-    private SimpleDateFormat outputFormat = new SimpleDateFormat();
+    private final SimpleDateFormat outputFormat = new SimpleDateFormat();
 
     // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
+    private final GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,9 +229,9 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView thumbnailView;
-        public TextView titleView;
-        public TextView subtitleView;
+        ImageView thumbnailView;
+        TextView titleView;
+        TextView subtitleView;
 
         ViewHolder(View view) {
             super(view);
