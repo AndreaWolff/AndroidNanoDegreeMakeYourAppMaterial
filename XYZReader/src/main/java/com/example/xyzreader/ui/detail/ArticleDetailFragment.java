@@ -35,6 +35,7 @@ import static android.support.v4.app.ShareCompat.IntentBuilder.from;
 import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.example.xyzreader.data.ArticleLoader.Query.AUTHOR;
 import static com.example.xyzreader.data.ArticleLoader.Query.BODY;
 import static com.example.xyzreader.data.ArticleLoader.Query.PHOTO_URL;
@@ -53,9 +54,9 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
     public static final String ARG_ITEM_ID = "item_id";
 
-    private Cursor mCursor;
-    private long mItemId;
-    private View mRootView;
+    private Cursor cursor;
+    private long itemId;
+    private View rootView;
     private ImageView mPhotoView;
     private TextView bylineView;
     private TextView bodyView;
@@ -91,7 +92,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItemId = getArguments().getLong(ARG_ITEM_ID);
+            itemId = getArguments().getLong(ARG_ITEM_ID);
         }
 
         setHasOptionsMenu(true);
@@ -110,14 +111,14 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+        rootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
-        mPhotoView = mRootView.findViewById(R.id.photo);
-        bylineView = mRootView.findViewById(R.id.article_byline);
-        bodyView =  mRootView.findViewById(R.id.article_body);
+        mPhotoView = rootView.findViewById(R.id.photo);
+        bylineView = rootView.findViewById(R.id.article_byline);
+        bodyView =  rootView.findViewById(R.id.article_body);
 
-        Toolbar toolbar = mRootView.findViewById(R.id.toolbar);
-        collapsingToolbarLayout = mRootView.findViewById(R.id.collapsing_toolbar_layout);
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        collapsingToolbarLayout = rootView.findViewById(R.id.collapsing_toolbar_layout);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -131,12 +132,11 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getActivity().onBackPressed();
                 getActivity().finish();
             }
         });
 
-        FloatingActionButton fab = mRootView.findViewById(R.id.share_fab);
+        FloatingActionButton fab = rootView.findViewById(R.id.share_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,12 +148,12 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         });
 
         bindViews();
-        return mRootView;
+        return rootView;
     }
 
     private Date parsePublishedDate() {
         try {
-            String date = mCursor.getString(PUBLISHED_DATE);
+            String date = cursor.getString(PUBLISHED_DATE);
             return dateFormat.parse(date);
         } catch (ParseException ex) {
             Log.e(TAG, ex.getMessage());
@@ -163,36 +163,36 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     }
 
     private void bindViews() {
-        if (mRootView == null) {
+        if (rootView == null) {
             return;
         }
 
-        if (mCursor != null) {
-            mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
+        if (cursor != null) {
+            rootView.setAlpha(0);
+            rootView.setVisibility(VISIBLE);
+            rootView.animate().alpha(1);
 
-            collapsingToolbarLayout.setTitle(mCursor.getString(TITLE));
+            collapsingToolbarLayout.setTitle(cursor.getString(TITLE));
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-                String dateAndAuthor = DateUtils.getRelativeTimeSpanString(publishedDate.getTime(), currentTimeMillis(), HOUR_IN_MILLIS, FORMAT_ABBREV_ALL).toString() + " by " + mCursor.getString(AUTHOR);
+                String dateAndAuthor = DateUtils.getRelativeTimeSpanString(publishedDate.getTime(), currentTimeMillis(), HOUR_IN_MILLIS, FORMAT_ABBREV_ALL).toString() + " by " + cursor.getString(AUTHOR);
                 bylineView.setText(dateAndAuthor);
 
             } else {
                 // If date is before 1902, just show the string
-                bylineView.setText(Html.fromHtml(outputFormat.format(publishedDate) + " by " + mCursor.getString(AUTHOR)));
+                bylineView.setText(Html.fromHtml(outputFormat.format(publishedDate) + " by " + cursor.getString(AUTHOR)));
             }
 
-//            bodyView.setText(mCursor.getString(BODY));
-            bodyView.setText(Html.fromHtml(mCursor.getString(BODY)));
-//            bodyView.setText(Html.fromHtml(mCursor.getString(BODY).replaceAll("/(?:\r\n|\r|\n)/g", "<br/>")));
-//            bodyView.setText(Html.fromHtml(mCursor.getString(BODY).replaceAll("\\. ", ".<br/>")));
-//            bodyView.setText(Html.fromHtml(mCursor.getString(BODY).replaceAll("(\r)", " ").replaceAll("(\n)", "<br />")));
-//            bodyView.setText(Html.fromHtml(mCursor.getString(BODY).replaceAll("(\r\n|\n)", "<br />")));
+            String articleBodyText = cursor.getString(BODY);
+            if (getResources().getBoolean(R.bool.isTabletForText)) {
+                bodyView.setText(Html.fromHtml(articleBodyText.replaceAll("(\r\n|\n)", "<br/>")));
+            } else {
+                bodyView.setText(Html.fromHtml(articleBodyText));
+            }
 
-            GlideUtil.displayImage(mCursor.getString(PHOTO_URL), mPhotoView);
+            GlideUtil.displayImage(cursor.getString(PHOTO_URL), mPhotoView);
         } else {
-            mRootView.setVisibility(GONE);
+            rootView.setVisibility(GONE);
             collapsingToolbarLayout.setTitle("N/A");
             bylineView.setText("N/A" );
             bodyView.setText("N/A");
@@ -201,7 +201,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return ArticleLoader.newInstanceForItemId(getActivity(), mItemId);
+        return ArticleLoader.newInstanceForItemId(getActivity(), itemId);
     }
 
     @Override
@@ -213,11 +213,11 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             return;
         }
 
-        mCursor = cursor;
-        if (mCursor != null && !mCursor.moveToFirst()) {
+        this.cursor = cursor;
+        if (this.cursor != null && !this.cursor.moveToFirst()) {
             Log.e(TAG, "Error reading item detail cursor");
-            mCursor.close();
-            mCursor = null;
+            this.cursor.close();
+            this.cursor = null;
         }
 
         bindViews();
@@ -225,7 +225,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        mCursor = null;
+        cursor = null;
         bindViews();
     }
 }

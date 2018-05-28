@@ -6,7 +6,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-
         <!-- Fixed an issue where the Title was being cut off -->
         <!-- Taken from https://stackoverflow.com/questions/29738510/toolbar-overlapping-below-status-bar -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

@@ -40,6 +40,8 @@ import static android.support.v7.widget.OrientationHelper.VERTICAL;
 import static android.text.Html.fromHtml;
 import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.example.xyzreader.data.ArticleLoader.Query.AUTHOR;
 import static com.example.xyzreader.data.ArticleLoader.Query.PUBLISHED_DATE;
 import static com.example.xyzreader.data.ArticleLoader.Query.THUMB_URL;
@@ -60,7 +62,6 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView articleRecyclerView;
-    private boolean isRefreshing;
 
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
@@ -83,6 +84,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
             public void onRefresh() {
                 unregisterReceiver(mRefreshingReceiver);
@@ -120,14 +122,23 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         @Override
         public void onReceive(Context context, Intent intent) {
             if (BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
-                isRefreshing = intent.getBooleanExtra(EXTRA_REFRESHING, false);
-                updateRefreshingUI();
+                boolean isRefreshing = intent.getBooleanExtra(EXTRA_REFRESHING, false);
+                updateRefreshingUI(isRefreshing);
             }
         }
     };
 
-    private void updateRefreshingUI() {
-        swipeRefreshLayout.setRefreshing(isRefreshing);
+    private void updateRefreshingUI(boolean isRefreshing) {
+        articleRecyclerView.setVisibility(GONE);
+
+        if (isRefreshing) {
+            swipeRefreshLayout.setRefreshing(true);
+            articleRecyclerView.setVisibility(GONE);
+            return;
+        }
+
+        swipeRefreshLayout.setRefreshing(false);
+        articleRecyclerView.setVisibility(VISIBLE);
     }
 
     @Override
@@ -202,7 +213,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
 
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
                 holder.subtitleView.setText(fromHtml(DateUtils.getRelativeTimeSpanString(publishedDate.getTime(), currentTimeMillis(),
-                                            HOUR_IN_MILLIS, FORMAT_ABBREV_ALL).toString() + "<br/>" + " by " + mCursor.getString(AUTHOR)));
+                        HOUR_IN_MILLIS, FORMAT_ABBREV_ALL).toString() + "<br/>" + " by " + mCursor.getString(AUTHOR)));
             } else {
                 holder.subtitleView.setText(fromHtml(outputFormat.format(publishedDate) + "<br/>" + " by " + mCursor.getString(AUTHOR)));
             }

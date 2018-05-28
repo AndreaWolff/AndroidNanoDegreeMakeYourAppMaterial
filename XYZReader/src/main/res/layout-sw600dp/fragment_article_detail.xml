@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
 
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?colorPrimary"
-            app:expandedTitleMarginStart="12dp"
+            app:expandedTitleMarginStart="24dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             >
 
@@ -32,10 +32,10 @@
                     android:id="@+id/photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/article_photo_description"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     tools:src="@drawable/toolbar_dropshadow"
+                    android:contentDescription="@string/article_photo_description"
                     />
 
                 <View
@@ -73,12 +73,12 @@
 
             <TextView
                 android:id="@+id/article_byline"
-                style="?android:attr/textAppearanceMedium"
+                style="?android:attr/textAppearanceLarge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="@id/constraint_layout"
@@ -89,12 +89,12 @@
 
             <TextView
                 android:id="@+id/article_body"
-                style="?android:attr/textAppearanceMedium"
+                style="?android:attr/textAppearanceLarge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:autoLink="web"
                 android:lineSpacingExtra="5sp"

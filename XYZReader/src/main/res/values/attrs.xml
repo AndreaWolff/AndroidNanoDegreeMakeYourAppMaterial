@@ -4,4 +4,5 @@
     </declare-styleable>
 
     <bool name="isTablet">false</bool>
+    <bool name="isTabletForText">false</bool>
 </resources>
