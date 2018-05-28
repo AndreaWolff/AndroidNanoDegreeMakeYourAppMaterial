@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="@dimen/detail_app_bar_height"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
 
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?colorPrimary"
-            app:expandedTitleMarginStart="24dp"
+            app:expandedTitleMarginStart="@dimen/padding_standard_1.5"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             >
 
@@ -74,12 +74,12 @@
             <TextView
                 android:id="@+id/article_byline"
                 style="?android:attr/textAppearanceLarge"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/padding_standard_half"
+                android:layout_marginEnd="@dimen/padding_standard_1.5"
+                android:layout_marginStart="@dimen/padding_standard_1.5"
+                android:layout_marginTop="@dimen/padding_standard"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="@id/constraint_layout"
                 app:layout_constraintStart_toStartOf="@id/constraint_layout"
@@ -90,14 +90,14 @@
             <TextView
                 android:id="@+id/article_body"
                 style="?android:attr/textAppearanceLarge"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/padding_standard"
+                android:layout_marginEnd="@dimen/padding_standard_1.5"
+                android:layout_marginStart="@dimen/padding_standard_1.5"
+                android:layout_marginTop="@dimen/padding_standard"
                 android:autoLink="web"
-                android:lineSpacingExtra="5sp"
+                android:lineSpacingExtra="@dimen/detail_line_spacing"
                 android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
                 android:linksClickable="true"
                 app:layout_constraintBottom_toBottomOf="@id/constraint_layout"
@@ -124,14 +124,14 @@
     <!--Taken from https://orcchg.wordpress.com/2016/03/10/shadow-under-toolbar/ -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="@dimen/padding_standard_half"
         app:layout_anchor="@+id/collapsing_toolbar_layout"
         app:layout_anchorGravity="bottom"
         >
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="@dimen/padding_standard_quarter"
             android:layout_alignParentBottom="true"
             android:background="@drawable/toolbar_dropshadow"
             />

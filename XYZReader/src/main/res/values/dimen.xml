@@ -1,0 +1,23 @@
+<resources>
+    <!-- list -->
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="thumbnail_image">100dp</dimen>
+    
+    <!-- detail -->
+    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
+    <dimen name="detail_app_bar_height">300dp</dimen>
+    <dimen name="detail_line_spacing">5sp</dimen>
+
+    <!-- common -->
+    <dimen name="match_constraint">0dp</dimen>
+    <dimen name="padding_standard_quarter">4dp</dimen>
+    <dimen name="padding_standard_half">8dp</dimen>
+    <dimen name="padding_standard">16dp</dimen>
+    <dimen name="padding_standard_1.5">24dp</dimen>
+    
+    
+    <dimen name="fab_elevation">2dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
+    <dimen name="fab_margin">24dp</dimen>
+
+</resources>
