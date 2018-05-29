@@ -11,6 +11,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
+        android:elevation="@dimen/padding_standard_quarter"
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -39,8 +40,8 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/padding_standard"
         android:layout_marginEnd="@dimen/padding_standard"
+        android:layout_marginStart="@dimen/padding_standard"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
@@ -48,11 +49,11 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/padding_standard_half"
-            android:paddingBottom="@dimen/padding_standard"
-            android:layout_marginStart="@dimen/padding_standard"
             android:layout_marginEnd="@dimen/padding_standard"
+            android:layout_marginStart="@dimen/padding_standard"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/padding_standard"
+            android:paddingTop="@dimen/padding_standard_half"
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>
